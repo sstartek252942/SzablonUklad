@@ -6,13 +6,13 @@
 #include <iostream>
 
 
-enum MetodaWyznacznika {laplace, gauss, sarrus};
+enum MetodaWyznacznika {laplace, gauss};
 
 template<class TYP, int ROZMIAR>
 class Macierz {
   Wektor<TYP,ROZMIAR> array[ROZMIAR]; //Program dziala na macierzach pionowych
 
-  double dopelnienie(int x, int y) const;
+  TYP dopelnienie(int x, int y) const;
 
   public: 
   Macierz<TYP,ROZMIAR>()  {for (int j = 0; j < ROZMIAR; j++) for (int i = 0; i < ROZMIAR; i++) this->array[i][j] = 0;};
@@ -35,7 +35,7 @@ class Macierz {
 
   Macierz<TYP,ROZMIAR> transponuj() const;
   Macierz<TYP,ROZMIAR> odwroc() const;
-  double Wyznacznik(MetodaWyznacznika metoda = sarrus) const;
+  TYP Wyznacznik(MetodaWyznacznika metoda = laplace) const;
 
   
 

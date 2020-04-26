@@ -4,7 +4,7 @@
 CPPFLAGS= -c -g -Iinc -Wall -pedantic
 
 __start__: uklad_rownan
-	./uklad_rownan
+	./uklad_rownan < test.txt
 
 uklad_rownan: obj/main.o obj/LZespolona.o obj/Wektor.o obj/Macierz.o 
 	g++ -Wall -pedantic -o uklad_rownan obj/main.o obj/LZespolona.o obj/Wektor.o obj/Macierz.o 

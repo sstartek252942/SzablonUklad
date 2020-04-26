@@ -106,6 +106,23 @@ LZespolona  operator += (LZespolona & Skl1,  const LZespolona & Skl2)
   return Skl1;
 }
 
+LZespolona  operator -= (LZespolona & Skl1,  const LZespolona & Skl2) 
+{
+  Skl1 = Skl1 - Skl2; 
+  return Skl1;
+}
+
+LZespolona  operator *= (LZespolona & Skl1,  const LZespolona & Skl2) 
+{
+  Skl1 = Skl1 * Skl2; 
+  return Skl1;
+}
+
+LZespolona  operator /= (LZespolona & Skl1,  const LZespolona & Skl2) 
+{
+  Skl1 = Skl1 / Skl2; 
+  return Skl1;
+}
 /*Praca na operatorach przesuniecia*/
 
 /*

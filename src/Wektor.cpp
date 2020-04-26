@@ -66,7 +66,7 @@ TYP Wektor<TYP,ROZMIAR>::operator * (Wektor<TYP,ROZMIAR> const &Wek) const
 }
 
 template<class TYP, int ROZMIAR>
-Wektor<TYP,ROZMIAR> Wektor<TYP,ROZMIAR>::operator * (double a) const
+Wektor<TYP,ROZMIAR> Wektor<TYP,ROZMIAR>::operator * (TYP a) const
 {
   Wektor<TYP,ROZMIAR> tempWek;
   for (int i = 0; i < ROZMIAR; i++)    
@@ -77,7 +77,7 @@ Wektor<TYP,ROZMIAR> Wektor<TYP,ROZMIAR>::operator * (double a) const
 }
 
 template<class TYP, int ROZMIAR>
-Wektor<TYP,ROZMIAR> Wektor<TYP,ROZMIAR>::operator / (double a) const
+Wektor<TYP,ROZMIAR> Wektor<TYP,ROZMIAR>::operator / (TYP a) const
 {
   Wektor<TYP,ROZMIAR> tempWek;
   if (a != 0.0)
@@ -96,6 +96,19 @@ double Wektor<TYP,ROZMIAR>::dlugosc() const
   for (int i = 0; i < ROZMIAR; i++)
   {
     tempDouble += (*this)[i] * ((*this)[i]);
+  }
+  return sqrt(tempDouble);
+}
+
+template <>
+double Wektor<LZespolona,4>::dlugosc() const
+{
+  double tempDouble = 0;
+  for (int i = 0; i < 4; i++)
+  {
+
+    LZespolona tempLZ = (*this)[i]*Sprzezenie((*this)[i]);
+    tempDouble += tempLZ.re;
   }
   return sqrt(tempDouble);
 }
@@ -125,6 +138,19 @@ bool Wektor<TYP,ROZMIAR>::operator == (const Wektor<TYP,ROZMIAR> & W2) const
   }
   return flag;
 }
+
+template<>
+bool Wektor<LZespolona,4>::operator == (const Wektor<LZespolona,4> & W2) const
+{ 
+  bool flag = true;
+  for (int i = 0; i < 4; i++)    
+  {
+    if ((*this)[i] != W2[i])
+    flag = false;
+  }
+  return flag;
+}
+
 
 template<>
 bool Wektor<LZespolona,5>::operator == (const Wektor<LZespolona,5> & W2) const
@@ -164,7 +190,7 @@ Wektor<TYP,ROZMIAR> Wektor<TYP,ROZMIAR>::Swap(int w1, int w2) const
 
 //************Funkcje mnozenia************//
 template<class TYP, int ROZMIAR>
-Wektor<TYP,ROZMIAR> operator*(double a, const Wektor<TYP,ROZMIAR> & W2)
+Wektor<TYP,ROZMIAR> operator*(TYP a, const Wektor<TYP,ROZMIAR> & W2)
 {
   return W2*a;
 }

@@ -13,6 +13,9 @@ int main()
   std::cout << D3.dlugosc() << std::endl;
 
   Macierz<LZespolona,5> M3;
-  M3[0][3] = {8,6};
+  std::cin >> M3;
   std::cout << M3 << std::endl;
+
+  std::cout << M3.Wyznacznik(gauss) << std::endl;
+  //std::cout << M3.Wyznacznik() << std::endl;
 }

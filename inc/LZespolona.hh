@@ -52,6 +52,8 @@ LZespolona  operator * (const LZespolona & Skl1,  const LZespolona & Skl2);
 LZespolona  operator / (const LZespolona & Skl1,  const LZespolona & Skl2);
 
 LZespolona  operator += (LZespolona & Skl1,  const LZespolona & Skl2);
+LZespolona  operator -= (LZespolona & Skl1,  const LZespolona & Skl2);
+LZespolona  operator *= (LZespolona & Skl1,  const LZespolona & Skl2);
 
 /*
 LZespolona  operator += (LZespolona & Skl1,  double Skl2) {Skl1.re = Skl1.re + Skl2; return Skl1;}
