@@ -19,7 +19,7 @@ struct  LZespolona {
   LZespolona(double re2, double im2) : re(re2), im(im2) {};
   explicit LZespolona (double liczba) : re(liczba), im(0) {};
 
-  LZespolona & operator = (double Skl2) {re = Skl2; im = 0.0; return (*this);};
+  LZespolona operator = (double Skl2) {re = Skl2; im = 0.0; return (*this);};
 };
 
 std::istream & operator >>(std::istream & strm,        LZespolona & Skl);
@@ -55,10 +55,12 @@ LZespolona  operator += (LZespolona & Skl1,  const LZespolona & Skl2);
 LZespolona  operator -= (LZespolona & Skl1,  const LZespolona & Skl2);
 LZespolona  operator *= (LZespolona & Skl1,  const LZespolona & Skl2);
 
+LZespolona  operator *= (LZespolona & Skl1,  double Skl2);
+
 /*
 LZespolona  operator += (LZespolona & Skl1,  double Skl2) {Skl1.re = Skl1.re + Skl2; return Skl1;}
 LZespolona  operator -= (LZespolona & Skl1,  double Skl2) {Skl1.re = Skl1.re - Skl2; return Skl1;}
-LZespolona  operator *= (LZespolona & Skl1,  double Skl2) {Skl1 = Skl1 * Skl2; return Skl1;}
+
 LZespolona  operator /= (LZespolona & Skl1,  double Skl2) {Skl1 = Skl1 / Skl2; return Skl1;}*/
 
 #endif

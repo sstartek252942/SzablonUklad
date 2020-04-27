@@ -1,5 +1,4 @@
 #include <iostream>
-#include <assert.h>
 #include <cmath>
 #include "LZespolona.hh"
 #include "rozmiar.h"
@@ -38,9 +37,13 @@ LZespolona  operator * (const LZespolona & Skl,  double  a)
 LZespolona  operator / (const LZespolona & Skl,  double  a)
 {
   LZespolona Temp = Skl;
-  assert(a != 0);
-  Temp.re /= a;
-  Temp.im /= a;
+
+  if (a != 0.0)  
+  {
+    Temp.re /= a;
+    Temp.im /= a;
+  }
+  else throw THROWDIVIDEZERO;
   return Temp;
 }
 
@@ -58,7 +61,7 @@ bool  operator != (const LZespolona & Skl1,  const LZespolona & Skl2)
 
 bool  operator == (const LZespolona & Skl1,  double Skl2)
 {
-  return (abs(Skl1.re - Skl2) <= EPSILON);
+  return (abs(Skl1.re - Skl2) <= EPSILON && abs(Skl1.im - 0) <= EPSILON);
 }
 
 bool  operator != (const LZespolona & Skl1,  double Skl2)
@@ -121,6 +124,12 @@ LZespolona  operator *= (LZespolona & Skl1,  const LZespolona & Skl2)
 LZespolona  operator /= (LZespolona & Skl1,  const LZespolona & Skl2) 
 {
   Skl1 = Skl1 / Skl2; 
+  return Skl1;
+}
+
+LZespolona  operator *= (LZespolona & Skl1,  double Skl2) 
+{
+  Skl1 = Skl1 * Skl2; 
   return Skl1;
 }
 /*Praca na operatorach przesuniecia*/

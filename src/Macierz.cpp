@@ -67,9 +67,10 @@ template<class TYP, int ROZMIAR>
 Macierz<TYP,ROZMIAR> Macierz<TYP,ROZMIAR>::operator * (double a) const 
 {
   Macierz<TYP,ROZMIAR> temp;
+  TYP tempTYP(a);
   for (int i = 0; i < ROZMIAR; i++)    
   {
-    temp[i] = (*this)[i] * (TYP)a;
+    temp[i] = (*this)[i] * tempTYP;
   }
   return temp;
 }
@@ -121,35 +122,24 @@ Wektor<TYP,ROZMIAR> Macierz<TYP,ROZMIAR>::operator * (const Wektor<TYP,ROZMIAR> 
 template<class TYP, int ROZMIAR> //NOT WORK
 TYP Macierz<TYP,ROZMIAR>::dopelnienie(int x, int y) const
 {
-  Macierz<TYP,ROZMIAR-1> macierzSmallTemp;
-  //TYP tempMnozenie = (TYP)0;
-  TYP tempDodawanie = (TYP)0;
+  Macierz<TYP,4> macierzSmallTemp;
   if (x < 0 || x >= ROZMIAR || y < 0 || y >= ROZMIAR)
   {
     std::cerr << ERROROUTOFBOUNDS << std::endl;
     exit(1);
   }
-
+  
   for (int j = 0; j < ROZMIAR; j++)
   {
      for (int i = 0; i < ROZMIAR; i++)
      {
-       //std::cout << "i=" << i << " j= " << j <<std::endl;
        if (i < x && j < y) macierzSmallTemp[i][j] = (*this)[i][j];
        if (i < x && j > y) macierzSmallTemp[i][j-1] = (*this)[i][j];
        if (i > x && j < y) macierzSmallTemp[i-1][j] = (*this)[i][j];
-       if (i > x && j > y) macierzSmallTemp[i-1][j-1] = (*this)[i][j];
-       //if (i < 4 && j < 4) std::cout << macierzSmallTemp[i][j];     
+       if (i > x && j > y) macierzSmallTemp[i-1][j-1] = (*this)[i][j];   
      }
   }
-  std::cout << macierzSmallTemp << std::endl;
-  if (ROZMIAR > 1)
-  for (int i = 0; i < ROZMIAR-1; i++)
-  {
-    //tempDodawanie += (macierzSmallTemp)[i][0] * macierzSmallTemp.dopelnienie(i,0);
-  }
-  else return (macierzSmallTemp)[0][0];
-  return tempDodawanie;
+  return macierzSmallTemp.Wyznacznik();
 }
 
 template<class TYP, int ROZMIAR>
@@ -161,8 +151,9 @@ Macierz<TYP,ROZMIAR> Macierz<TYP,ROZMIAR>::odwroc() const
   {
     for (int j = 0; j < ROZMIAR; j++)
       for (int i = 0; i < ROZMIAR; i++)
-        M2[i][j] = (*this).dopelnienie(i,j) / Wyznacznik;
-  }
+	{
+        M2[i][j] = (*this).dopelnienie(i,j) / Wyznacznik * ((i+j)%2==0?1:-1);
+  }}
   else throw THROWDIVIDEZERO;
   return M2.transponuj();
 }
@@ -170,7 +161,7 @@ Macierz<TYP,ROZMIAR> Macierz<TYP,ROZMIAR>::odwroc() const
 template<class TYP, int ROZMIAR>
 TYP Macierz<TYP,ROZMIAR>::Wyznacznik(MetodaWyznacznika metoda) const //laplace, gauss
 {
-  TYP temp = (TYP)0;
+  TYP temp(0);
   switch(metoda){
 
   case laplace:		//Macierz 3x3, dla innych trzeba poprawić dopelnienie
@@ -191,12 +182,12 @@ TYP Macierz<TYP,ROZMIAR>::Wyznacznik(MetodaWyznacznika metoda) const //laplace, 
       int j = i;        
       while (!flag && j < ROZMIAR)
       {
-        if (tempMacierz[i][j] != (TYP)0)
+        if (tempMacierz[i][j] != 0)
         {
           if (i != j) 
           {
             tempMacierz = tempMacierz.SwapLineVertical(i, j);
-            temp *= (TYP)-1.0;
+            temp = temp * -1.0;
           }
           flag = true;
         }
@@ -204,12 +195,15 @@ TYP Macierz<TYP,ROZMIAR>::Wyznacznik(MetodaWyznacznika metoda) const //laplace, 
       }
 
       //wyznacznik 0, bo nie da się podzielic i zostaly same zera
-      if (!flag) return (TYP)0;
-
+      if (!flag) 
+      {
+        temp = 0;
+	return temp;
+      }
       //odejmowanie
       for (int k = i+1; k < ROZMIAR; k++)
       {
-        tempMacierz[k] = tempMacierz[k] - tempMacierz[i] * (TYP)tempMacierz[k][i] / (TYP)tempMacierz[i][i];
+        tempMacierz[k] = tempMacierz[k] - tempMacierz[i] * tempMacierz[k][i] / tempMacierz[i][i];
         
       }
       //std::cout << tempMacierz << std::endl;

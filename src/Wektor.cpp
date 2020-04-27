@@ -56,7 +56,7 @@ Wektor<TYP,ROZMIAR> Wektor<TYP,ROZMIAR>::operator - (Wektor<TYP,ROZMIAR> const &
 template<class TYP, int ROZMIAR>
 TYP Wektor<TYP,ROZMIAR>::operator * (Wektor<TYP,ROZMIAR> const &Wek) const
 {
-  TYP tempTYPU = (TYP) 0.0;
+  TYP tempTYPU(0.0);
   for (int i = 0; i < ROZMIAR; i++)    
   {
     tempTYPU += (*this)[i] * Wek[i];
@@ -85,7 +85,7 @@ Wektor<TYP,ROZMIAR> Wektor<TYP,ROZMIAR>::operator / (TYP a) const
   {
     tempWek[i] = (*this)[i] / a;
   }
-  else throw THROWDIVIDEZERO;
+  else{throw THROWDIVIDEZERO;}
   return tempWek;
 }
 

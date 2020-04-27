@@ -135,6 +135,6 @@ std::ostream& operator << ( std::ostream &Strm,  const UkladRownanLiniowych<TYP,
   Macierz<TYP,ROZMIAR> tempM(UklRown.getmacierz().transponuj());
   
   for (int i = 0; i < ROZMIAR; i++)
-  Strm <<  " |" << tempM[i] << "| " << " |x_" << i+1 << "|"<< std::setw(2) << (i==1?'=':' ') << std::setw(2) << "|" << std::setw(SKIP) << UklRown.getwektor()[i] << "|" << std::endl;
+  Strm <<  " |" << tempM[i] << "| " << " |x_" << i+1 << "|"<< std::setw(2) << (i==(int)(ROZMIAR/2)?'=':' ') << std::setw(2) << "|" << std::setw(SKIP) << UklRown.getwektor()[i] << "|" << std::endl;
   return Strm; 
 }
