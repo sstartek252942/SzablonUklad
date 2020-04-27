@@ -1,14 +1,6 @@
 #include "UkladRownanLiniowych.hh"
 #include <iomanip>
 
-//************Konstruktory************//
-template<class TYP, int ROZMIAR>
-UkladRownanLiniowych<TYP,ROZMIAR>::UkladRownanLiniowych<TYP,ROZMIAR>(const Macierz<TYP,ROZMIAR> & M, const Wektor<TYP,ROZMIAR> & W)
-{
-  this->macierz = M;
-  this->wektor = W;
-}
-
 //************Metody:Getter i Setter************//
 template<class TYP, int ROZMIAR>
 const Wektor<TYP,ROZMIAR> & UkladRownanLiniowych<TYP,ROZMIAR>::getwektor() const
@@ -17,7 +9,7 @@ const Wektor<TYP,ROZMIAR> & UkladRownanLiniowych<TYP,ROZMIAR>::getwektor() const
 }
 
 template<class TYP, int ROZMIAR>
-void UkladRownanLiniowych<TYP,ROZMIAR>::setwektor(const Wektor & W)
+void UkladRownanLiniowych<TYP,ROZMIAR>::setwektor(const Wektor<TYP,ROZMIAR> & W)
 {
   this->wektor = W;
 }
@@ -29,7 +21,7 @@ const Macierz<TYP,ROZMIAR> & UkladRownanLiniowych<TYP,ROZMIAR>::getmacierz() con
 }
 
 template<class TYP, int ROZMIAR>
-void UkladRownanLiniowych<TYP,ROZMIAR>::setmacierz(const Macierz & M)
+void UkladRownanLiniowych<TYP,ROZMIAR>::setmacierz(const Macierz<TYP,ROZMIAR> & M)
 {
   this->macierz = M;
 }
@@ -41,14 +33,9 @@ Wektor<TYP,ROZMIAR> UkladRownanLiniowych<TYP,ROZMIAR>::rozwiaz(MetodaUkladu meto
   Macierz<TYP,ROZMIAR> tempM2(this->macierz);
   Wektor<TYP,ROZMIAR> wynik;
   Wektor<TYP,ROZMIAR> tempW2(wektor);
-
+  TYP wyznacznik = tempM2.Wyznacznik();
   switch (metoda){
-
   case cramer:
-    double W;
-    W = tempM2.Wyznacznik();
-
-
     for (int i = 0; i < ROZMIAR; i++)
     {
       tempM2[i] = wektor;
@@ -56,17 +43,17 @@ Wektor<TYP,ROZMIAR> UkladRownanLiniowych<TYP,ROZMIAR>::rozwiaz(MetodaUkladu meto
       tempM2[i] = macierz[i];
     }
 
-    if (W != 0)
+    if (wyznacznik != 0)
     {
       for (int i = 0; i < ROZMIAR; i++)
       {
-        wynik[i] = wynik[i]/W;
+        wynik[i] = wynik[i]/wyznacznik;
       }
       return wynik;
     }
     //else if (WX !=0 || WY != 0 || WZ != 0) std::cerr << "Uklad sprzeczny" << std::endl;
     else throw THROWNOANSWER;
-
+  break;
   case gaussjordan:
     tempM2 = tempM2.transponuj();
 
@@ -118,12 +105,12 @@ Wektor<TYP,ROZMIAR> UkladRownanLiniowych<TYP,ROZMIAR>::rozwiaz(MetodaUkladu meto
       wynik[i] = tempW2[i]/tempM2[i][i]; 
     }
     return wynik;
-  
+  break;
   case odwrotna:
     tempM2 = tempM2.odwroc();
     wynik = tempM2 * wektor;
   return wynik;
-
+  break;
   }
   std::cerr << ERROROUTOFENUM << std::endl;
   exit(0);

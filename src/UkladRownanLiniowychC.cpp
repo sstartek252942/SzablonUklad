@@ -1,22 +1,19 @@
 #include <iostream>
 #include <iomanip>
 
-#include "UkladRownanLiniowychC.cpp"
+#include "UkladRownanLiniowych.cpp"
 #include "LZespolona.hh"
 
 
 
-template class Wektor<double,3>;
-template std::istream& operator >> (std::istream &Strm, Macierz<double,3> &Mac);
-template std::ostream& operator << (std::ostream &Strm, const Macierz<double,3> &Mac);
-template Macierz<double,3> operator *(double B, const Macierz<double,3> M);
+template class UkladRownanLiniowych<double,3>;
+template std::istream& operator >> (std::istream &Strm, UkladRownanLiniowych<double,3> &UklRown);
+template std::ostream& operator << (std::ostream &Strm, const UkladRownanLiniowych<double,3> &UklRown);
 
-template class Wektor<double,5>;
-template std::istream& operator >> (std::istream &Strm, Macierz<double,5> &Mac);
-template std::ostream& operator << (std::ostream &Strm, const Macierz<double,5> &Mac);
-template Macierz<double,5> operator *(double B, const Macierz<double,5> M);
+template class UkladRownanLiniowych<double,5>;
+template std::istream& operator >> (std::istream &Strm, UkladRownanLiniowych<double,5> &UklRown);
+template std::ostream& operator << (std::ostream &Strm, const UkladRownanLiniowych<double,5> &UklRown);
 
-template class Wektor<LZespolona,5>;
-template std::istream& operator >> (std::istream &Strm, Macierz<LZespolona,5> &Mac);
-template std::ostream& operator << (std::ostream &Strm, const Macierz<LZespolona,5> &Mac);
-template Macierz<LZespolona,5> operator *(double B, const Macierz<LZespolona,5> M);
+template class UkladRownanLiniowych<LZespolona,5>;
+template std::istream& operator >> (std::istream &Strm, UkladRownanLiniowych<LZespolona,5> &UklRown);
+template std::ostream& operator << (std::ostream &Strm, const UkladRownanLiniowych<LZespolona,5> &UklRown);

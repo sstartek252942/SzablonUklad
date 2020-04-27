@@ -15,7 +15,8 @@ class UkladRownanLiniowych {
 
   public:
   UkladRownanLiniowych<TYP,ROZMIAR>(){};
-  UkladRownanLiniowych<TYP,ROZMIAR>(const Macierz & M, const Wektor & W);
+  UkladRownanLiniowych<TYP,ROZMIAR>(const Macierz<TYP,ROZMIAR> & M, const Wektor<TYP,ROZMIAR> & W){macierz = M; wektor = W;};
+
 
   Wektor<TYP,ROZMIAR> rozwiaz(MetodaUkladu metoda = cramer) const;
 
@@ -26,9 +27,9 @@ class UkladRownanLiniowych {
   void setmacierz(const Macierz<TYP,ROZMIAR> & M);
 };
 
-
+template<class TYP, int ROZMIAR>
 std::istream& operator >> (std::istream &Strm, UkladRownanLiniowych<TYP,ROZMIAR> &UklRown);
-
+template<class TYP, int ROZMIAR>
 std::ostream& operator << ( std::ostream &Strm, const UkladRownanLiniowych<TYP,ROZMIAR> &UklRown);
 
 

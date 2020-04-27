@@ -35,7 +35,7 @@ class Macierz {
 
   Macierz<TYP,ROZMIAR> transponuj() const;
   Macierz<TYP,ROZMIAR> odwroc() const;
-  TYP Wyznacznik(MetodaWyznacznika metoda = laplace) const;
+  TYP Wyznacznik(MetodaWyznacznika metoda = gauss) const;
 
   
 
