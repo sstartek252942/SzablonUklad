@@ -24,8 +24,7 @@ int main()
   //std::cout << UklRown.getwektor()<< std::endl;
   
   std::cout << std::endl;
-  //std::cout << "Wyznacznik - Laplace:\t" << UklRown.getmacierz().Wyznacznik(laplace) << std::endl;
-  std::cout << "Wyznacznik - Gauss:\t"   << UklRown.getmacierz().Wyznacznik(gauss)   << std::endl;
+  std::cout << "Wyznacznik - Gauss:\t"   << UklRown.getmacierz().Wyznacznik()   << std::endl;
   
   std::cout << std::endl;
   std::cout << "Uklad rownan" << std::endl << UklRown << std::endl<< std::endl;
@@ -104,8 +103,7 @@ int main()
   //std::cout << UklRown2.getwektor()<< std::endl;
   
   std::cout << std::endl;
-  //std::cout << "Wyznacznik - Laplace:\t" << UklRown2.getmacierz().Wyznacznik(laplace) << std::endl;
-  std::cout << "Wyznacznik - Gauss:\t"   << UklRown2.getmacierz().Wyznacznik(gauss)   << std::endl;
+  std::cout << "Wyznacznik - Gauss:\t"   << UklRown2.getmacierz().Wyznacznik()   << std::endl;
   
   std::cout << std::endl;
   std::cout << "Uklad rownan" << std::endl << UklRown2 << std::endl<< std::endl;

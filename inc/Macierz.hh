@@ -5,9 +5,6 @@
 #include "Wektor.hh"
 #include <iostream>
 
-
-enum MetodaWyznacznika {laplace, gauss};
-
 template<class TYP, int ROZMIAR>
 class Macierz {
   Wektor<TYP,ROZMIAR> array[ROZMIAR]; //Program dziala na macierzach pionowych
@@ -35,7 +32,7 @@ class Macierz {
 
   Macierz<TYP,ROZMIAR> transponuj() const;
   Macierz<TYP,ROZMIAR> odwroc() const;
-  TYP Wyznacznik(MetodaWyznacznika metoda = gauss) const;
+  TYP Wyznacznik() const;
 
   
 

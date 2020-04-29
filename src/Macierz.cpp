@@ -159,65 +159,49 @@ Macierz<TYP,ROZMIAR> Macierz<TYP,ROZMIAR>::odwroc() const
 }
 
 template<class TYP, int ROZMIAR>
-TYP Macierz<TYP,ROZMIAR>::Wyznacznik(MetodaWyznacznika metoda) const //laplace, gauss
+TYP Macierz<TYP,ROZMIAR>::Wyznacznik() const //laplace, gauss
 {
-  TYP temp(0);
-  switch(metoda){
-
-  case laplace:		//Macierz 3x3, dla innych trzeba poprawić dopelnienie
-    for (int i = 0; i < ROZMIAR; i++)
-    {
-      //std::cout << (*this);
-      temp += (*this)[i][0] * ((*this).dopelnienie(i,0));
-    }
-    return temp;
+  TYP temp(1);
   
-  case gauss: //Macierz dowolna
-    Macierz<TYP,ROZMIAR> tempMacierz(*this);
-    temp = 1;
-    for (int i = 0; i < ROZMIAR-1; i++)
+  Macierz<TYP,ROZMIAR> tempMacierz(*this);
+  for (int i = 0; i < ROZMIAR-1; i++)
+  {
+    //podmienianie  
+    bool flag = false;
+    int j = i;        
+    while (!flag && j < ROZMIAR)
     {
-      //podmienianie  
-      bool flag = false;
-      int j = i;        
-      while (!flag && j < ROZMIAR)
+      if (tempMacierz[i][j] != 0)
       {
-        if (tempMacierz[i][j] != 0)
+        if (i != j) 
         {
-          if (i != j) 
-          {
-            tempMacierz = tempMacierz.SwapLineVertical(i, j);
-            temp = temp * -1.0;
-          }
-          flag = true;
+          tempMacierz = tempMacierz.SwapLineVertical(i, j);
+          temp = temp * -1.0;
         }
-        j++;
+        flag = true;
       }
-
-      //wyznacznik 0, bo nie da się podzielic i zostaly same zera
-      if (!flag) 
-      {
-        temp = 0;
-	return temp;
-      }
-      //odejmowanie
-      for (int k = i+1; k < ROZMIAR; k++)
-      {
-        tempMacierz[k] = tempMacierz[k] - tempMacierz[i] * tempMacierz[k][i] / tempMacierz[i][i];
-        
-      }
-      //std::cout << tempMacierz << std::endl;
+      j++;
     }
-    
-    for (int i = 0; i < ROZMIAR; i++)
+
+    //wyznacznik 0, bo nie da się podzielic i zostaly same zera
+    if (!flag) 
     {
-      temp *= tempMacierz[i][i];
+      temp = 0;
+      return temp;
     }
-
-    return temp;
+    //odejmowanie
+    for (int k = i+1; k < ROZMIAR; k++)
+    {
+      tempMacierz[k] = tempMacierz[k] - tempMacierz[i] * tempMacierz[k][i] / tempMacierz[i][i];  
+    }
+    //std::cout << tempMacierz << std::endl;
   }
-  std::cerr << ERROROUTOFENUM << std::endl;
-  exit(0);
+    
+  for (int i = 0; i < ROZMIAR; i++)
+  {
+    temp *= tempMacierz[i][i];
+  }
+  return temp;
 }
 
 template<class TYP, int ROZMIAR>
